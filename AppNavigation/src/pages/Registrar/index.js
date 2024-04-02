@@ -6,6 +6,7 @@ export default function Registrar({navigation}){
     <View>
         <Text>Faça seu Registro ou entre no seu login.</Text>
         <Text onPress={()=>navigation.navigate ('Login')}>Login</Text>
+        
     </View>
     )
 }
