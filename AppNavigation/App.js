@@ -8,14 +8,14 @@ import Home from './src/pages/Home/index';
 import Login from './src/pages/Login/index'
 import Conteúdo1 from './src/pages/Conteúdo1/index';
 import Conteúdo2 from './src/pages/Conteúdo2/index';
-import Perfil from '/src/pages/Perfil/index';
+import Perfil from './src/pages/Perfil/index';
 import Avisos from "./src/pages/Avisos/index";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-function HomeScreen({ navigation }) {
+function HomeScreen() {
   return (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={Home} />
@@ -25,10 +25,10 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function HomeScreenBottom({ navigation }) {
+function HomeScreenBottom() {
   return(
-    <Tab.Navigator initialRouteName="Home">
-      <Tab.Screen name="Home" component={Home} />
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
       <Tab.Screen name="Avisos" component={Avisos} />
     </Tab.Navigator>   
   );
@@ -40,9 +40,10 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name='Registrar' component={Registrar} />
         <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name="Home" component={HomeScreen}
+        <Stack.Screen name="Home" component={HomeScreenBottom}
         options={{ headerShown: false }}/>
         <Stack.Screen name="Perfil" component={Perfil}/>
+        <Stack.Screen name="Avisos" component={Avisos}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
