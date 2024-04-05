@@ -1,4 +1,5 @@
 import React from "react";
+import {useState} from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -15,6 +16,7 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
+
 function HomeScreen() {
   return (
     <Drawer.Navigator initialRouteName="Home">
@@ -28,25 +30,32 @@ function HomeScreen() {
 function HomeScreenBottom() {
   return(
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
       <Tab.Screen name="Avisos" component={Avisos} />
     </Tab.Navigator>   
   );
 }
 
 function App() {
+  const [EstaLogado, setLogado] = useState(false);
   return (
+    EstaLogado?(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='Registrar' component={Registrar} />
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name="Home" component={HomeScreenBottom}
-        options={{ headerShown: false }}/>
+        <Stack.Screen name="Home" component={HomeScreenBottom} options={{headerShown:false}}/>
         <Stack.Screen name="Perfil" component={Perfil}/>
         <Stack.Screen name="Avisos" component={Avisos}/>
       </Stack.Navigator>
     </NavigationContainer>
-  );
+    ):(
+      <NavigationContainer>	 		
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} initialParams = {{funcLogar : setLogado}}/>
+          <Stack.Screen name="Registrar" component={Registrar}/>    
+        </Stack.Navigator>    
+    </NavigationContainer>))
+      
+
 }
 
 export default App;

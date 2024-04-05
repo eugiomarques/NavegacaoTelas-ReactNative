@@ -1,14 +1,11 @@
 import React from "react";
-import {View, Text} from 'react-native'
+import {View, Text, Button} from 'react-native'
 
-export default function Login({navigation}){
+export default function Login({navigation, route}){
     return(
     <View>
-        <Text>Faça seu Login ou registre-se.</Text>
-        <Text onPress={()=>navigation.navigate ('Registrar')}>Registre-se aqui</Text>
-
-        <Text onPress={()=>navigation.navigate ('Home')}>Entrar aqui</Text>
-    
+        <Button onPress = {()=>route.params.funcLogar(true)} title='Logar'/>
+        <Button onPress = {()=>navigation.navigate("Registrar")} title = 'Registrar'/>
     </View>
     )
 }
