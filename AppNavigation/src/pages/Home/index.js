@@ -1,11 +1,11 @@
 import React from "react";
-import {View, Text} from 'react-native'
+import {View, Button} from 'react-native'
 
-export default function Home({navigation}){
+export default function Home({navigation, route}){
     return(
     <View>
-        <Text onPress={()=>navigation.navigate ('Perfil')}>Perfil</Text>
-        <Text onPress={()=>navigation.navigate ('Login')}>Voltar Login</Text>
+        <Button onPress = {()=>navigation.navigate("Perfil")} title = 'Perfil'/>
+        <Button onPress = {()=>route.params.funcSair(true)} title='Sair'/>
     </View>
     )
 }                       

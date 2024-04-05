@@ -12,6 +12,7 @@ import Conteúdo2 from './src/pages/Conteúdo2/index';
 import Perfil from './src/pages/Perfil/index';
 import Avisos from "./src/pages/Avisos/index";
 
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,8 +55,27 @@ function App() {
           <Stack.Screen name="Registrar" component={Registrar}/>    
         </Stack.Navigator>    
     </NavigationContainer>))
-      
+}
 
+function Sair() {
+  const [EstaDeslogado, setDeslogado] = useState(true)
+  return(
+    EstaDeslogado?(
+      <NavigationContainer>
+      <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login}/>
+      <Stack.Screen name="Registrar" component={Registrar}/> 
+      </Stack.Navigator>
+    </NavigationContainer>
+    ):(
+      <NavigationContainer>	 		
+        <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} initialParams = {{funcSair : setDeslogado}}/>
+        <Stack.Screen name="Perfil" component={Perfil}/>
+        <Stack.Screen name="Avisos" component={Avisos}/>   
+        </Stack.Navigator>    
+    </NavigationContainer>))
 }
 
 export default App;
+export { Sair };
