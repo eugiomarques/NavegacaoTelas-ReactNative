@@ -57,25 +57,4 @@ function App() {
     </NavigationContainer>))
 }
 
-function Sair() {
-  const [EstaDeslogado, setDeslogado] = useState(true)
-  return(
-    EstaDeslogado?(
-      <NavigationContainer>
-      <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login}/>
-      <Stack.Screen name="Registrar" component={Registrar}/> 
-      </Stack.Navigator>
-    </NavigationContainer>
-    ):(
-      <NavigationContainer>	 		
-        <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} initialParams = {{funcSair : setDeslogado}}/>
-        <Stack.Screen name="Perfil" component={Perfil}/>
-        <Stack.Screen name="Avisos" component={Avisos}/>   
-        </Stack.Navigator>    
-    </NavigationContainer>))
-}
-
 export default App;
-export { Sair };
