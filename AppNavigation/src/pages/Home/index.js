@@ -5,7 +5,7 @@ export default function Home({navigation, route}){
     return(
     <View>
         <Button onPress = {()=>navigation.navigate("Perfil")} title = 'Perfil'/>
-        <Button onPress = {()=>route.params.funcLogar(true)} title='Sair'/>
+        <Button onPress = {()=>route.params.funcLogar(false)} title='Sair'/>
     </View>
     )
 }                       

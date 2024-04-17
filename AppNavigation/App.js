@@ -21,7 +21,7 @@ const Tab = createBottomTabNavigator();
 function HomeScreen() {
   return (
     <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Home" component={Home} initialParams = {{funcLogar : setLogado}}/>
       <Drawer.Screen name="Conteúdo 1" component={Conteúdo1} />
       <Drawer.Screen name="Conteúdo 2" component={Conteúdo2} />
     </Drawer.Navigator>
@@ -43,7 +43,7 @@ function App() {
     EstaLogado?(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreenBottom} options={{headerShown:false}}/>
+        <Stack.Screen name="Home" component={HomeScreenBottom} initialParams = {{funcLogar : setLogado}} options={{headerShown:false}}/>
         <Stack.Screen name="Perfil" component={Perfil}/>
         <Stack.Screen name="Avisos" component={Avisos}/>
       </Stack.Navigator>
