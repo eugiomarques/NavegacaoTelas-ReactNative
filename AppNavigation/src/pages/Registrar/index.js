@@ -27,7 +27,7 @@ export default function Registrar({ navigation }) {
                 secureTextEntry
             />
             <Button title="Registrar" onPress={handleRegister} />
-            <Text style={styles.loginText} onPress={() => navigation.navigate('Login')}>Login</Text>
+            <Button title="Login" onPress={() => navigation.navigate('Login')} color="blue" />
         </View>
     );
 }
@@ -49,9 +49,5 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 16,
         paddingLeft: 8,
-    },
-    loginText: {
-        color: 'blue',
-        textDecorationLine: 'underline',
     },
 });
