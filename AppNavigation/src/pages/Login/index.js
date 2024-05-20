@@ -2,15 +2,12 @@ import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 export default function Login({ navigation }) {
-    const [matricula, setMatricula] = React.useState('');
-    const [senha, setSenha] = React.useState('');
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
-    const handleMatriculaChange = (matricula) => {
-        setMatricula(matricula);
-    };
-
-    const handleSenhaChange = (senha) => {
-        setSenha(senha);
+    const handleLogin = () => {
+        // Aqui você pode implementar a lógica de login
+        console.log(`Username: ${username}, Password: ${password}`);
     };
 
     return (
@@ -18,19 +15,19 @@ export default function Login({ navigation }) {
             <Text style={styles.title}>Faça seu Login ou registre-se.</Text>
             <TextInput
                 style={styles.input}
-                placeholder='Digite sua matrícula'
-                value={matricula}
-                onChangeText={handleMatriculaChange}
+                placeholder="Nome de usuário"
+                value={username}
+                onChangeText={setUsername}
             />
-            <Text style={styles.linkText} onPress={() => navigation.navigate('Registrar')}>Registre-se aqui</Text>
             <TextInput
                 style={styles.input}
-                placeholder='Digite sua senha'
-                value={senha}
-                onChangeText={handleSenhaChange}
+                placeholder="Senha"
+                value={password}
+                onChangeText={setPassword}
                 secureTextEntry
             />
-            <Button title="Entrar aqui" onPress={() => navigation.navigate('Home')} />
+            <Button title="Entrar" onPress={() => navigation.navigate('Home')} />
+            <Button title="Não possui cadastro? Registre-se aqui" onPress={() => navigation.navigate('Registrar')} color="blue" />
         </View>
     );
 }
@@ -39,7 +36,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
         padding: 16,
     },
     title: {
@@ -54,7 +50,4 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         paddingLeft: 8,
     },
-    linkText: {
-        color: 'blue',
-        textDecorationLine: 'underline',
-        marginBottom: 16,
+});
