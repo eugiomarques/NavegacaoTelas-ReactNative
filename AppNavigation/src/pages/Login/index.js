@@ -5,11 +5,6 @@ export default function Login({ navigation }) {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const handleLogin = () => {
-        // Aqui você pode implementar a lógica de login
-        console.log(`Username: ${username}, Password: ${password}`);
-    };
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Faça seu Login ou registre-se.</Text>
