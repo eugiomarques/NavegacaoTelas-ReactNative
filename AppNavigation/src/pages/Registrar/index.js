@@ -27,7 +27,7 @@ export default function Registrar({ navigation }) {
                 secureTextEntry
             />
             <Button title="Registrar" onPress={handleRegister} />
-            <Button title="Login" onPress={() => navigation.navigate('Login')} color="blue" />
+            <Button title="Já possui cadastro? Faça seu login" onPress={() => navigation.navigate('Login')} color="blue" />
         </View>
     );
 }
