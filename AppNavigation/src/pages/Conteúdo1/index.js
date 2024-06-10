@@ -1,24 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Conteudo1() {
     const [produtos, setProdutos] = useState([]);
 
-    useEffect(() => {
-        const fetchProdutos = async () => {
-            try {
-                const produtosJSON = await AsyncStorage.getItem('produtos');
-                if (produtosJSON !== null) {
-                    setProdutos(JSON.parse(produtosJSON));
-                }
-            } catch (error) {
-                alert('Erro ao buscar os produtos.');
+    const fetchProdutos = useCallback(async () => {
+        try {
+            const produtosJSON = await AsyncStorage.getItem('produtos');
+            if (produtosJSON !== null) {
+                setProdutos(JSON.parse(produtosJSON));
             }
-        };
-
-        fetchProdutos();
+        } catch (error) {
+            alert('Erro ao buscar os produtos.');
+        }
     }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchProdutos();
+        }, [fetchProdutos])
+    );
+
+    const removerProduto = async (nomeProduto) => {
+        try {
+            let produtos = await AsyncStorage.getItem('produtos');
+            if (produtos !== null) {
+                produtos = JSON.parse(produtos);
+                const novoProdutos = produtos.filter(produto => produto.nome !== nomeProduto);
+                await AsyncStorage.setItem('produtos', JSON.stringify(novoProdutos));
+                setProdutos(novoProdutos); // Atualiza a lista de produtos na interface do usuário
+                alert('Produto removido com sucesso!');
+            }
+        } catch (error) {
+            alert('Erro ao remover o produto.');
+        }
+    };
+
+    const removerTodosProdutos = async () => {
+        try {
+            await AsyncStorage.removeItem('produtos');
+            setProdutos([]); // Limpa a lista de produtos na interface do usuário
+            alert('Todos os produtos foram removidos com sucesso!');
+        } catch (error) {
+            alert('Erro ao remover os produtos.');
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -31,9 +59,11 @@ export default function Conteudo1() {
                         <Text style={styles.cell}>{item.nome}</Text>
                         <Text style={styles.cell}>{item.quantidade}</Text>
                         <Text style={styles.cell}>{item.validade}</Text>
+                        <Button title="Remover Produto" onPress={() => removerProduto(item.nome)} />
                     </View>
                 )}
             />
+            <Button title="Remover Todos Produtos" onPress={removerTodosProdutos} />
         </View>
     );
 }
