@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Registrar({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        return navigation.addListener('focus', () => {
+            setUsername('');
+            setPassword('');
+        });
+    }, [navigation]);
 
     const handleRegister = async () => {
         if (!username || !password) {
