@@ -51,6 +51,11 @@ export default function Conteudo1() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Produtos Cadastrados</Text>
+            <View style={styles.row}>
+                <Text style={[styles.cell, styles.header]}>Nome do Produto</Text>
+                <Text style={[styles.cell, styles.header]}>Quantidade</Text>
+                <Text style={[styles.cell, styles.header]}>Validade</Text>
+            </View>
             <FlatList
                 data={produtos}
                 keyExtractor={(item, index) => index.toString()}
@@ -89,5 +94,8 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         fontSize: 16,
+    },
+    header: {
+        fontWeight: 'bold',
     },
 });

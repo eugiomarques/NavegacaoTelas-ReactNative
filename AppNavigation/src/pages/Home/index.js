@@ -29,6 +29,19 @@ export default function Home() {
         }
     };
 
+    const handleDateChange = (text) => {
+        let newText = '';
+        let index = 0;
+        for (let i = 0; i < text.length; i++) {
+            if (index === 2 || index === 4) {
+                newText = newText + '/';
+            }
+            newText = newText + text[i];
+            index++;
+        }
+        setValidadeProduto(newText);
+    };
+
     return (
         <View style={styles.container}>
             <Text onPress={()=>navigation.navigate ('Perfil')}>Perfil</Text>
@@ -43,13 +56,19 @@ export default function Home() {
                 style={styles.input}
                 placeholder="Quantidade do produto"
                 value={quantidadeProduto}
-                onChangeText={setQuantidadeProduto}
+                onChangeText={(text) => {
+                    setQuantidadeProduto(text.replace(/[^0-9]/g, ''));
+                }}
+                keyboardType='numeric'
             />
             <TextInput
                 style={styles.input}
                 placeholder="Validade do produto"
                 value={validadeProduto}
-                onChangeText={setValidadeProduto}
+                onChangeText={(text) => {
+                    handleDateChange(text.replace(/[^0-9]/g, ''));
+                }}
+                maxLength={10}
             />
             <Button title="Cadastrar Produto" onPress={handleRegister} />
         </View>
