@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
+    const navigation = useNavigation();
     const [nomeProduto, setNomeProduto] = useState('');
     const [quantidadeProduto, setQuantidadeProduto] = useState('');
     const [validadeProduto, setValidadeProduto] = useState('');
@@ -44,7 +46,7 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
-            <Text onPress={()=>navigation.navigate ('Perfil')}>Perfil</Text>
+            <Text onPress={()=>navigation.navigate('Perfil')}>Perfil</Text>
             <Text style={styles.title}>Cadastro de Produtos</Text>
             <TextInput
                 style={styles.input}

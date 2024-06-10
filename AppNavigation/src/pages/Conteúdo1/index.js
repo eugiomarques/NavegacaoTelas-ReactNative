@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -48,6 +48,15 @@ export default function Conteudo1() {
         }
     };
 
+    const enviarParaWhatsApp = () => {
+        let mensagem = 'Produtos:\n\n';
+        produtos.forEach(produto => {
+            mensagem += `Nome: ${produto.nome}\nQuantidade: ${produto.quantidade}\nValidade: ${produto.validade}\n\n`;
+        });
+        mensagem += `Data e hora do envio: ${new Date().toLocaleString()}`;
+        Linking.openURL(`whatsapp://send?text=${encodeURIComponent(mensagem)}`);
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Produtos Cadastrados</Text>
@@ -69,6 +78,7 @@ export default function Conteudo1() {
                 )}
             />
             <Button title="Remover Todos Produtos" onPress={removerTodosProdutos} />
+            <Button title="Enviar para WhatsApp" onPress={enviarParaWhatsApp} />
         </View>
     );
 }
