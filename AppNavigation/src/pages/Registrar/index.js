@@ -12,13 +12,19 @@ export default function Registrar({ navigation }) {
             return;
         }
 
-        const user = {
+        const newUser = {
             username,
             password,
         };
 
         try {
-            await AsyncStorage.setItem('user', JSON.stringify(user));
+            const usersJSON = await AsyncStorage.getItem('users');
+            let users = [];
+            if (usersJSON !== null) {
+                users = JSON.parse(usersJSON);
+            }
+            users.push(newUser);
+            await AsyncStorage.setItem('users', JSON.stringify(users));
             alert('Usuário registrado com sucesso!');
             navigation.navigate('Login');
         } catch (error) {
@@ -66,4 +72,4 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         paddingLeft: 8,
     },
-}); 
+});

@@ -8,21 +8,26 @@ export default function Login({ navigation }) {
 
     const handleLogin = async () => {
         if (!username || !password) {
-            alert('Preencha todos os campos.');
+            Alert.alert('Preencha todos os campos.');
             return;
         }
 
         try {
-            const storedUser = JSON.parse(await AsyncStorage.getItem('user'));
+            const usersJSON = await AsyncStorage.getItem('users');
+            let users = [];
+            if (usersJSON !== null) {
+                users = JSON.parse(usersJSON);
+            }
+            const storedUser = users.find(user => user.username === username && user.password === password);
 
-            if (storedUser && storedUser.username === username && storedUser.password === password) {
-                alert('Login realizado com sucesso!');
+            if (storedUser) {
+                Alert.alert('Login realizado com sucesso!');
                 navigation.navigate('Home');
             } else {
-                alert('Usuário ou senha incorretos.');
+                Alert.alert('Usuário ou senha incorretos.');
             }
         } catch (error) {
-            alert('Erro ao fazer login.');
+            Alert.alert('Erro ao fazer login.');
         }
     };
 
