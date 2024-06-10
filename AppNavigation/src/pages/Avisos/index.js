@@ -25,6 +25,17 @@ export default function Avisos() {
         }, [fetchProdutos])
     );
 
+    const checkExpiryDate = (validade) => {
+        const today = new Date();
+        const expiryDate = new Date(validade.split('/').reverse().join('-'));
+
+        if (expiryDate.getFullYear() === today.getFullYear() && expiryDate.getMonth() === today.getMonth()) {
+            return '⚠️ Produto vence este mês!';
+        }
+
+        return '';
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Avisos</Text>
@@ -32,6 +43,7 @@ export default function Avisos() {
                 <Text style={[styles.cell, styles.header]}>Nome do Produto</Text>
                 <Text style={[styles.cell, styles.header]}>Quantidade</Text>
                 <Text style={[styles.cell, styles.header]}>Validade</Text>
+                <Text style={[styles.cell, styles.header]}>Aviso</Text>
             </View>
             <FlatList
                 data={produtos}
@@ -41,6 +53,7 @@ export default function Avisos() {
                         <Text style={styles.cell}>{item.nome}</Text>
                         <Text style={styles.cell}>{item.quantidade}</Text>
                         <Text style={styles.cell}>{item.validade}</Text>
+                        <Text style={styles.cell}>{checkExpiryDate(item.validade)}</Text>
                     </View>
                 )}
             />

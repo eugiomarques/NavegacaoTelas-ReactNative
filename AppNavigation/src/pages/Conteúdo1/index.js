@@ -57,6 +57,17 @@ export default function Conteudo1() {
         Linking.openURL(`whatsapp://send?text=${encodeURIComponent(mensagem)}`);
     };
 
+    const checkExpiryDate = (validade) => {
+        const today = new Date();
+        const expiryDate = new Date(validade.split('/').reverse().join('-'));
+
+        if (expiryDate.getFullYear() === today.getFullYear() && expiryDate.getMonth() === today.getMonth()) {
+            return '⚠️ Produto vence este mês!';
+        }
+
+        return '';
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Produtos Cadastrados</Text>
@@ -73,6 +84,7 @@ export default function Conteudo1() {
                         <Text style={styles.cell}>{item.nome}</Text>
                         <Text style={styles.cell}>{item.quantidade}</Text>
                         <Text style={styles.cell}>{item.validade}</Text>
+                        <Text style={styles.cell}>{checkExpiryDate(item.validade)}</Text>
                         <Button title="Remover Produto" onPress={() => removerProduto(item.nome)} />
                     </View>
                 )}
