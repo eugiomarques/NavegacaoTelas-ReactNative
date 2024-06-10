@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({ navigation }) {
     const [nome, setNome] = useState('');
@@ -17,11 +18,9 @@ export default function Home({ navigation }) {
     };
 
     const handleValidadeChange = (validade) => {
-        // Remove todos os caracteres não numéricos
         const numericValidade = validade.replace(/[^0-9]/g, '');
         let formattedValidade = '';
 
-        // Adiciona a barra após o dia e o mês
         for (let i = 0; i < numericValidade.length; i++) {
             if (i === 2 || i === 4) {
                 formattedValidade += '/';
@@ -32,9 +31,35 @@ export default function Home({ navigation }) {
         setValidade(formattedValidade);
     };
 
-    const handleSubmit = () => {
-        // Aqui você pode implementar a lógica para adicionar o produto
-        console.log(`Produto adicionado: ${nome}, Quantidade: ${quantidade}, Validade: ${validade}`);
+    const handleSubmit = async () => {
+        // Verifica se todos os campos estão preenchidos
+        if (!nome || !quantidade || !validade) {
+            Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+            return;
+        }
+
+        const novoProduto = {
+            nome,
+            quantidade,
+            validade,
+        };
+
+        let produtos = await AsyncStorage.getItem('produtos');
+        if (!produtos) {
+            produtos = [];
+        } else {
+            produtos = JSON.parse(produtos);
+        }
+
+        produtos.push(novoProduto);
+
+        try {
+            await AsyncStorage.setItem('produtos', JSON.stringify(produtos));
+            Alert.alert('Sucesso', 'Produto cadastrado com sucesso!');
+        } catch (error) {
+            console.error(error);
+            Alert.alert('Erro', 'Houve um erro ao tentar cadastrar o produto.');
+        }
     };
 
     return (
@@ -69,19 +94,26 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
         justifyContent: 'center',
         padding: 16,
     },
     title: {
         fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 16,
     },
     input: {
+        width: '80%',
         height: 40,
         borderColor: 'gray',
+        margin: 10,
         borderWidth: 1,
         marginBottom: 16,
         paddingLeft: 8,
+        borderRadius: 5,
+        padding: 5,
     },
 });
