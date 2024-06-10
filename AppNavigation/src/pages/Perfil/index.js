@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Perfil() {
+export default function Perfil({ navigation }) {
     const [username, setUsername] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -42,6 +42,12 @@ export default function Perfil() {
         }
     };
 
+    const handleLogout = async () => {
+        await AsyncStorage.removeItem('isLoggedIn');
+        await AsyncStorage.removeItem('currentUser');
+        navigation.navigate('Login');
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Perfil</Text>
@@ -61,6 +67,7 @@ export default function Perfil() {
                 secureTextEntry
             />
             <Button title="Alterar senha" onPress={handleChangePassword} />
+            <Button title="Sair" onPress={handleLogout} color="red" />
         </View>
     );
 }
