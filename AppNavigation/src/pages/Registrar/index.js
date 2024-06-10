@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Registrar({ navigation }) {
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handleRegister = () => {
-        // Aqui você pode implementar a lógica de registro
-        console.log(`Username: ${username}, Password: ${password}`);
+    const handleRegister = async () => {
+        if (!username || !password) {
+            alert('Preencha todos os campos.');
+            return;
+        }
+
+        const user = {
+            username,
+            password,
+        };
+
+        try {
+            await AsyncStorage.setItem('user', JSON.stringify(user));
+            alert('Usuário registrado com sucesso!');
+            navigation.navigate('Login');
+        } catch (error) {
+            alert('Erro ao registrar o usuário.');
+        }
     };
 
     return (
