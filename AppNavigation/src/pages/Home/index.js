@@ -20,7 +20,9 @@ export default function Home() {
         };
 
         try {
-            await AsyncStorage.setItem('produto', JSON.stringify(produto));
+            const existingProducts = JSON.parse(await AsyncStorage.getItem('produtos')) || [];
+            existingProducts.push(produto);
+            await AsyncStorage.setItem('produtos', JSON.stringify(existingProducts));
             alert('Produto cadastrado com sucesso!');
         } catch (error) {
             alert('Erro ao cadastrar o produto.');
