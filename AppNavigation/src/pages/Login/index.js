@@ -21,6 +21,7 @@ export default function Login({ navigation }) {
             const storedUser = users.find(user => user.username === username && user.password === password);
 
             if (storedUser) {
+                await AsyncStorage.setItem('currentUser', username);
                 Alert.alert('Login realizado com sucesso!');
                 navigation.navigate('Home');
             } else {
