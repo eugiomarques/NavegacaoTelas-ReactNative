@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import bcrypt from 'bcryptjs'; // Importe a biblioteca bcryptjs
 
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
@@ -12,6 +13,11 @@ export default function Login({ navigation }) {
             setPassword('');
         });
     }, [navigation]);
+
+    // Função para comparar a senha fornecida com a senha criptografada armazenada
+    const comparePassword = async (inputPassword, storedHash) => {
+        return bcrypt.compareSync(inputPassword, storedHash);
+    };
 
     const handleLogin = async () => {
         if (!username || !password) {
@@ -25,15 +31,21 @@ export default function Login({ navigation }) {
             if (usersJSON !== null) {
                 users = JSON.parse(usersJSON);
             }
-            const storedUser = users.find(user => user.username === username && user.password === password);
+            const storedUser = users.find(user => user.username === username);
 
             if (storedUser) {
-                await AsyncStorage.setItem('isLoggedIn', 'true');
-                await AsyncStorage.setItem('currentUser', username);
-                Alert.alert('Login realizado com sucesso!');
-                navigation.navigate('Home');
+                // Compare a senha fornecida com a hash armazenada
+                const isMatch = await comparePassword(password, storedUser.password);
+                if (isMatch) {
+                    await AsyncStorage.setItem('isLoggedIn', 'true');
+                    await AsyncStorage.setItem('currentUser', username);
+                    Alert.alert('Login realizado com sucesso!');
+                    navigation.navigate('Home');
+                } else {
+                    Alert.alert('Usuário ou senha incorretos.');
+                }
             } else {
-                Alert.alert('Usuário ou senha incorretos.');
+                Alert.alert('Usuário não encontrado.');
             }
         } catch (error) {
             Alert.alert('Erro ao fazer login.');

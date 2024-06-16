@@ -49,6 +49,14 @@ export default function Registrar({ navigation }) {
         }
     };
 
+    // Função para comparar a senha fornecida com a senha criptografada armazenada
+    const comparePassword = async (inputPassword, storedHash) => {
+        return bcrypt.compareSync(inputPassword, storedHash);
+    };
+
+    // Você pode usar a função comparePassword onde for necessário no seu código
+    // Por exemplo, durante o processo de login
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Faça seu Registro ou entre no seu login.</Text>
