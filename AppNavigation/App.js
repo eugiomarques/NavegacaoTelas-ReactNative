@@ -22,7 +22,6 @@ function HomeScreen() {
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Produtos Cadastrados" component={Conteúdo1} />
-      <Drawer.Screen name="Conteúdo 2" component={Conteúdo2} />
     </Drawer.Navigator>
   );
 }
