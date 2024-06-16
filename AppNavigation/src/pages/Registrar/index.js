@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import bcrypt from 'bcryptjs'; // Importe a biblioteca bcryptjs
 
 export default function Registrar({ navigation }) {
     const [username, setUsername] = useState('');
@@ -19,9 +20,13 @@ export default function Registrar({ navigation }) {
             return;
         }
 
+        // Gere um salt e crie um hash da senha
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(password, salt);
+
         const newUser = {
             username,
-            password,
+            password: hashedPassword, // Armazene a senha como um hash
         };
 
         try {
@@ -29,6 +34,11 @@ export default function Registrar({ navigation }) {
             let users = [];
             if (usersJSON !== null) {
                 users = JSON.parse(usersJSON);
+            }
+            // Verifique se o nome de usuário já existe
+            if (users.some(user => user.username === username)) {
+                alert('Nome de usuário já existe.');
+                return;
             }
             users.push(newUser);
             await AsyncStorage.setItem('users', JSON.stringify(users));
