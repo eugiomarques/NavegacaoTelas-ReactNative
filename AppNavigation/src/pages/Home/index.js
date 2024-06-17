@@ -26,6 +26,9 @@ export default function Home() {
             existingProducts.push(produto);
             await AsyncStorage.setItem('produtos', JSON.stringify(existingProducts));
             alert('Produto cadastrado com sucesso!');
+            setNomeProduto('');
+            setQuantidadeProduto('');
+            setValidadeProduto('');
         } catch (error) {
             alert('Erro ao cadastrar o produto.');
         }

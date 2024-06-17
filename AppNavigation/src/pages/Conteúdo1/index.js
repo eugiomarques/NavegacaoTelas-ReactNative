@@ -75,6 +75,7 @@ export default function Conteudo1() {
                 <Text style={[styles.cell, styles.header]}>Nome do Produto</Text>
                 <Text style={[styles.cell, styles.header]}>Quantidade</Text>
                 <Text style={[styles.cell, styles.header]}>Validade</Text>
+                <Text style={[styles.cell, styles.header]}>Aviso</Text>
             </View>
             <FlatList
                 data={produtos}
