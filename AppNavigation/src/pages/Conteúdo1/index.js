@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start', // Alinha os itens à esquerda
         marginBottom: 10,
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
@@ -116,8 +116,12 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         fontSize: 16,
+        textAlign: 'left',
+        paddingLeft: 10, // Adiciona um padding à esquerda para alinhar com os títulos
     },
     header: {
         fontWeight: 'bold',
+        paddingLeft: 10, // Adiciona um padding à esquerda para alinhar com os itens
     },
+    // ... outros estilos
 });
