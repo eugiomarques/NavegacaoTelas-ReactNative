@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Perfil({ navigation }) {
@@ -50,8 +50,7 @@ export default function Perfil({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Perfil</Text>
-            <Text>Nome de usuário: {username}</Text>
+            <Text style={styles.title}>Nome de usuário: {username}</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Senha antiga"
@@ -66,8 +65,18 @@ export default function Perfil({ navigation }) {
                 onChangeText={setNewPassword}
                 secureTextEntry
             />
-            <Button title="Alterar senha" onPress={handleChangePassword} />
-            <Button title="Sair" onPress={handleLogout} color="red" />
+            <TouchableOpacity
+                style={[styles.button, styles.greenButton]}
+                onPress={handleChangePassword}
+            >
+                <Text style={styles.buttonText}>Alterar senha</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.button, styles.redButton]}
+                onPress={handleLogout}
+            >
+                <Text style={styles.buttonText}>Sair</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -76,6 +85,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
         padding: 16,
     },
     title: {
@@ -85,9 +95,32 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
+        width: '100%',
         borderColor: 'gray',
         borderWidth: 1,
+        borderRadius: 10, // Bordas arredondadas
         marginBottom: 16,
         paddingLeft: 8,
     },
+    button: {
+        width: '100%',
+        backgroundColor: '#007BFF',
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+    },
+    greenButton: {
+        backgroundColor: '#28a745', // Verde
+    },
+    redButton: {
+        backgroundColor: '#dc3545', // Vermelho
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });
+
