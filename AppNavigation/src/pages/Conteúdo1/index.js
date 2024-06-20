@@ -92,12 +92,11 @@ export default function Conteudo1() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Produtos Cadastrados</Text>
             <View style={styles.row}>
                 <Text style={[styles.cell, styles.header]}>Nome do Produto</Text>
-                <Text style={[styles.cell, styles.header]}>Quantidade</Text>
                 <Text style={[styles.cell, styles.header]}>Validade</Text>
-                <Text style={[styles.cell, styles.header]}>Aviso</Text>
+                <Text style={[styles.cell, styles.header]}>Vencimento</Text>
+                <Text style={[styles.cell, styles.header]}>Quantidade</Text>
             </View>
             <FlatList
                 data={produtos}
@@ -105,7 +104,6 @@ export default function Conteudo1() {
                 renderItem={({ item }) => (
                     <View style={styles.row}>
                         <Text style={styles.cell}>{item.nome}</Text>
-                        <Text style={styles.cell}>{item.quantidade}</Text>
                         <Text style={styles.cell}>{item.validade}</Text>
                         <Text style={styles.cell}>{checkExpiryDate(item.validade)}</Text>
                         <Button title="+" onPress={() => aumentarQuantidade(item.nome)} />

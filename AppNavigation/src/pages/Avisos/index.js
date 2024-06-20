@@ -38,7 +38,6 @@ export default function Avisos() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Avisos</Text>
             <View style={styles.row}>
                 <Text style={[styles.cell, styles.header]}>Nome do Produto</Text>
                 <Text style={[styles.cell, styles.header]}>Quantidade</Text>
