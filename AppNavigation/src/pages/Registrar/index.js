@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import bcrypt from 'bcryptjs'; // Importe a biblioteca bcryptjs
+import bcrypt from 'bcryptjs'; 
 
 export default function Registrar({ navigation }) {
     const [username, setUsername] = useState('');
@@ -19,6 +19,7 @@ export default function Registrar({ navigation }) {
             alert('Preencha todos os campos.');
             return;
         }
+        console.log('bcrypt:', bcrypt);
 
         // Gere um salt e crie um hash da senha
         const salt = bcrypt.genSaltSync(10);
