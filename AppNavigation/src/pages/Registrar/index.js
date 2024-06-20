@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import bcrypt from 'bcryptjs'; 
 
@@ -50,8 +50,8 @@ export default function Registrar({ navigation }) {
         }
     };
 
-    // Função para comparar a senha fornecida com a senha criptografada armazenada
-    const comparePassword = async (inputPassword, storedHash) => {
+     // Função para comparar a senha fornecida com a senha criptografada armazenada
+     const comparePassword = async (inputPassword, storedHash) => {
         return bcrypt.compareSync(inputPassword, storedHash);
     };
 
@@ -60,22 +60,28 @@ export default function Registrar({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Faça seu Registro ou entre no seu login.</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Nome de usuário"
-                value={username}
-                onChangeText={setUsername}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Senha"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Button title="Registrar" onPress={handleRegister} />
-            <Button title="Já possui cadastro? Faça seu login" onPress={() => navigation.navigate('Login')} color="blue" />
+            <View style={styles.formContainer}>
+                <Text style={styles.title}>Faça seu Registro</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nome de usuário"
+                    value={username}
+                    onChangeText={setUsername}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Senha"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+                <TouchableOpacity style={styles.button} onPress={handleRegister}>
+                    <Text style={styles.buttonText}>Registrar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={() => navigation.navigate('Login')}>
+                    <Text style={[styles.buttonText, styles.loginButtonText]}>Já possui cadastro? Faça seu login</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -84,18 +90,51 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f0f0f0',
         padding: 16,
+    },
+    formContainer: {
+        width: '90%',
+        backgroundColor: '#ffffff',
+        padding: 20,
+        borderRadius: 15,
+        elevation: 3, // Sombra no Android
+        shadowColor: '#000', // Sombra no iOS
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 16,
+        textAlign: 'center',
     },
     input: {
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
+        borderRadius: 10,
         marginBottom: 16,
         paddingLeft: 8,
+    },
+    button: {
+        backgroundColor: '#28a745', // Alterado para verde
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    loginButton: {
+        backgroundColor: '#6c757d',
+    },
+    loginButtonText: {
+        color: '#fff',
     },
 });
