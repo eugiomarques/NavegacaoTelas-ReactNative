@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderColor: 'gray',
         borderWidth: 1,
-        borderRadius: 10, // Bordas arredondadas
+        borderRadius: 10,
         marginBottom: 16,
         paddingLeft: 8,
     },
@@ -112,10 +112,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     greenButton: {
-        backgroundColor: '#28a745', // Verde
+        backgroundColor: '#28a745', 
     },
     redButton: {
-        backgroundColor: '#dc3545', // Vermelho
+        backgroundColor: '#dc3545', 
     },
     buttonText: {
         color: '#fff',

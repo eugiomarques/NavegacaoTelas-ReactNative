@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Linking } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, Linking, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -106,15 +106,40 @@ export default function Conteudo1() {
                         <Text style={styles.cell}>{item.nome}</Text>
                         <Text style={styles.cell}>{item.validade}</Text>
                         <Text style={styles.cell}>{checkExpiryDate(item.validade)}</Text>
-                        <Button title="+" onPress={() => aumentarQuantidade(item.nome)} />
+                        <TouchableOpacity
+                            style={[styles.button, styles.greenButton]}
+                            onPress={() => aumentarQuantidade(item.nome)}
+                        >
+                            <Text style={styles.buttonText}>+</Text>
+                        </TouchableOpacity>
                         <Text style={styles.cell}>{item.quantidade}</Text>
-                        <Button title="-" onPress={() => diminuirQuantidade(item.nome)} />
-                        <Button title="Remover Produto" onPress={() => removerProduto(item.nome)} />
+                        <TouchableOpacity
+                            style={[styles.button, styles.redButton]}
+                            onPress={() => diminuirQuantidade(item.nome)}
+                        >
+                            <Text style={styles.buttonText}>-</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.button, styles.redButton]}
+                            onPress={() => removerProduto(item.nome)}
+                        >
+                            <Text style={styles.buttonText}>Remover Produto</Text>
+                        </TouchableOpacity>
                     </View>
                 )}
             />
-            <Button title="Remover Todos Produtos" onPress={removerTodosProdutos} />
-            <Button title="Enviar para WhatsApp" onPress={enviarParaWhatsApp} />
+            <TouchableOpacity
+                style={[styles.button, styles.redButton]}
+                onPress={removerTodosProdutos}
+            >
+                <Text style={styles.buttonText}>Remover Todos Produtos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.button, styles.greenButton]}
+                onPress={enviarParaWhatsApp}
+            >
+                <Text style={styles.buttonText}>Enviar para WhatsApp</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -133,17 +158,36 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
+        marginBottom: 10,
     },
     cell: {
         flex: 1,
         fontSize: 16,
         textAlign: 'left',
-        paddingLeft: 10, 
+        paddingLeft: 10,
     },
     header: {
         fontWeight: 'bold',
-        paddingLeft: 10, 
+    },
+    button: {
+        padding: 10,
+        borderRadius: 10,
+        marginHorizontal: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    greenButton: {
+        backgroundColor: '#28a745', // Verde
+    },
+    redButton: {
+        backgroundColor: '#dc3545', // Vermelho
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
