@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,14 +15,22 @@ export default function Home() {
             return;
         }
 
-        const produto = {
-            nome: nomeProduto,
-            quantidade: quantidadeProduto,
-            validade: validadeProduto,
-        };
-
         try {
-            const existingProducts = JSON.parse(await AsyncStorage.getItem('produtos')) || [];
+            const existingProductsJSON = await AsyncStorage.getItem('produtos');
+            let existingProducts = existingProductsJSON ? JSON.parse(existingProductsJSON) : [];
+
+            // Verifica se o produto já existe pelo nome
+            if (existingProducts.some(produto => produto.nome === nomeProduto)) {
+                alert('Este produto já está cadastrado.');
+                return;
+            }
+
+            const produto = {
+                nome: nomeProduto,
+                quantidade: quantidadeProduto,
+                validade: validadeProduto,
+            };
+
             existingProducts.push(produto);
             await AsyncStorage.setItem('produtos', JSON.stringify(existingProducts));
             alert('Produto cadastrado com sucesso!');
