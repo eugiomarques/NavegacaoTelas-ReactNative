@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Button, FlatList, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -106,40 +106,28 @@ export default function Conteudo1() {
                         <Text style={styles.cell}>{item.nome}</Text>
                         <Text style={styles.cell}>{item.validade}</Text>
                         <Text style={styles.cell}>{checkExpiryDate(item.validade)}</Text>
-                        <TouchableOpacity
-                            style={[styles.button, styles.greenButton]}
-                            onPress={() => aumentarQuantidade(item.nome)}
-                        >
+                        <TouchableOpacity onPress={() => aumentarQuantidade(item.nome)} style={[styles.button, { backgroundColor: 'green' }]}>
                             <Text style={styles.buttonText}>+</Text>
                         </TouchableOpacity>
                         <Text style={styles.cell}>{item.quantidade}</Text>
-                        <TouchableOpacity
-                            style={[styles.button, styles.redButton]}
-                            onPress={() => diminuirQuantidade(item.nome)}
-                        >
+                        <TouchableOpacity onPress={() => diminuirQuantidade(item.nome)} style={[styles.button, { backgroundColor: 'red' }]}>
                             <Text style={styles.buttonText}>-</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.button, styles.redButton]}
-                            onPress={() => removerProduto(item.nome)}
-                        >
+                        <TouchableOpacity onPress={() => removerProduto(item.nome)} style={[styles.button, { backgroundColor: 'red' }]}>
                             <Text style={styles.buttonText}>Remover Produto</Text>
                         </TouchableOpacity>
                     </View>
                 )}
             />
-            <TouchableOpacity
-                style={[styles.button, styles.redButton]}
-                onPress={removerTodosProdutos}
-            >
-                <Text style={styles.buttonText}>Remover Todos Produtos</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button, styles.greenButton]}
-                onPress={enviarParaWhatsApp}
-            >
-                <Text style={styles.buttonText}>Enviar para WhatsApp</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonsContainer}>
+                <TouchableOpacity onPress={removerTodosProdutos} style={[styles.button, { backgroundColor: 'red' }]}>
+                    <Text style={styles.buttonText}>Remover Todos Produtos</Text>
+                </TouchableOpacity>
+                <View style={styles.buttonSpacer} />
+                <TouchableOpacity onPress={enviarParaWhatsApp} style={[styles.button, { backgroundColor: 'green' }]}>
+                    <Text style={styles.buttonText}>Enviar para WhatsApp</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -150,44 +138,41 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 16,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 16,
-    },
     row: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
-        marginBottom: 10,
+        paddingVertical: 8,
     },
     cell: {
         flex: 1,
         fontSize: 16,
-        textAlign: 'left',
         paddingLeft: 10,
     },
     header: {
         fontWeight: 'bold',
+        paddingLeft: 10,
     },
     button: {
-        padding: 10,
-        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 5,
         marginHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    greenButton: {
-        backgroundColor: '#28a745', // Verde
-    },
-    redButton: {
-        backgroundColor: '#dc3545', // Vermelho
-    },
     buttonText: {
-        color: '#fff',
-        fontSize: 16,
+        color: 'white',
         fontWeight: 'bold',
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 16,
+    },
+    buttonSpacer: {
+        width: 16,
     },
 });
